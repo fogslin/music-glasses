@@ -1,0 +1,269 @@
+<section id="overview">
+  <div class="muted small">Build guide · v1 prototype · from the "Music Glasses v1 Prototype" spec</div>
+  <h1><span class="grad">Music Glasses Mark 1</span> — music and calls in your own tortoiseshell frames</h1>
+  <p class="lead">Rounded-square tortoiseshell acetate frames that look completely normal from the front. Two slim gold hinge pods sit 17 mm back on the wire
+  temples, each holding a MAX98357A I²S amp, a 15 × 11 mm micro-speaker on the inner face and three flush touch inlays. Two tortoise ear pods ride on the acetate
+  ear tips, under the hair: the right one carries an Adafruit QT Py ESP32 Pico (classic Bluetooth A2DP + HFP + BLE), the USB-C charger, the power switch and an
+  <b>SPH0645 I²S mic</b> at its front edge, aimed down the jaw line; the left one carries a 120 mAh cell. A Flutter app talks to the glasses over BLE and helps you find them.</p>
+  <div class="grid g3">
+    <div class="feature"><span class="tag">1 · Music</span><b>Bluetooth music</b>A2DP sink "Muse Glasses" + AVRCP: stereo from your phone, one amp + speaker per side.</div>
+    <div class="feature"><span class="tag">2 · Calls</span><b>Phone calls</b>Hands-Free Profile (HFP 1.7 client): CVSD 8 kHz or mSBC 16 kHz wideband, mic in the right ear pod.</div>
+    <div class="feature"><span class="tag">3 · Touch</span><b>Tap · long-press · swipe</b>Tap = play/pause or answer/hang up. Long-press = reject. Swipe = volume (call volume in a call).</div>
+    <div class="feature"><span class="tag">4 · App</span><b>Companion app</b>Flutter + flutter_blue_plus: now playing, call state, volume, EQ, battery, settings.</div>
+    <div class="feature"><span class="tag">5 · Find</span><b>Find my glasses</b>Hotter/colder RSSI meter, where your phone was at the last disconnect, and a Play-sound chime that ignores mute.</div>
+    <div class="feature"><span class="tag">6 · Discreet</span><b>Invisible from the front</b>Nothing on the frame front; the cross-frame wire hides behind the top rim; the electronics hide under the hair.</div>
+  </div>
+  <div class="honest">Hobby prototype. Estimates: <b>~1 hour</b> of music or <b>~45–60 min</b> of calls from the 120 mAh cell (~3× with the 350 mAh option).
+  Open-ear sound leaks a little. The mic sits ~10 cm from the mouth (behind the ear, for looks), so callers hear you a bit quieter and with more room sound than on
+  earbuds. The firmware compiles but has not been run on hardware yet.</div>
+</section>
+
+<section id="frames">
+  <h2><span class="num">1</span> Frames &amp; pods</h2>
+  <p>The 3D model follows <b>your</b> frames, not the spec's gold cat-eye donor: a rounded-square / soft-panto front in mottled rose-mauve, cream and brown
+  translucent acetate (lens ≈ 50 × 42 mm, bridge ≈ 19 mm), thick rims, a slim metal bridge accent, silver rivet plates at the outer front corners,
+  metal nose pads, and <b>very thin light-gold wire temples (≈ 140 mm)</b> ending in tortoise acetate ear tips.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Printed part</th><th>Size (approx.)</th><th>Holds</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><b>Hinge pod ×2</b></td><td>59 × 21 × 6.2 mm</td><td>MAX98357A + speaker (inner face) + 3 touch pads</td><td>Starts 17 mm behind the hinge and is centred 2.2 mm inside the wire, so from the front it hides behind the end piece. Gold mica paint to match the wire temples. Open toward the head, closed by a lid with the speaker slot.</td></tr>
+      <tr><td><b>Right ear pod</b></td><td>32 × 24 × 15 mm</td><td>QT Py, Micro-Lipo charger, slide switch, SPH0645 mic</td><td>Clamps on the acetate ear tip, behind the ear. USB-C at the bottom end, switch knob on top, mic port + 3 mm horn in the lower-front wall pointing forward-down at the jaw line. Tortoise finish.</td></tr>
+      <tr><td><b>Left ear pod</b></td><td>34 × 16 × 9.5 mm</td><td>120 mAh 401230 cell</td><td>Snap-fit lid, tortoise finish. A 350 mAh cell needs a longer pod.</td></tr>
+      <tr><td><b>Rim cover strip</b></td><td>≈ 126 mm arc, Ø 3 mm</td><td>9-wire harness</td><td>Tortoise half-round strip glued along the <b>back</b> of the top rim, 2–3 mm below its top edge. Invisible from the front.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Inconspicuous by design</h3>
+  <p>The wearer's hair covers the temples and ears, so the layout pushes everything that can move back there:</p>
+  <ul>
+    <li><b>Frame front:</b> nothing electronic, no wires, no LEDs. The cross-frame ribbon runs on the <b>back face of the top rim</b>, under a tortoise cover strip. Cleaner (but irreversible) option: route a 1 mm groove along the inside top edge of the rim and fill it with tinted UV resin.</li>
+    <li><b>Hinge pods:</b> as slim (6.2 mm) and as far back (17 mm behind the hinge) as the amp breakout allows; outer face flush with the end piece; the head-side lid is tortoise. Speakers fire from the <b>inner face</b>; no grille on show. Gold paint, like the wire temples.</li>
+    <li><b>Behind-ear pods:</b> QT Py, charger, switch, USB-C, battery <b>and the mic</b>. Tortoise, like the ear tips. Hidden by hair.</li>
+    <li><b>What still can't move back:</b> the amps + speakers (they must sit near the ear canal, and moving the amps would add 4 more wires per side down the temple) and the touch pads (where a finger naturally lands).</li>
+  </ul>
+  <p class="small muted">The hinge pods are taller than the wire temple by design: the amp breakout (19 × 18 mm) sets their height, but from the front they stay inside the end piece's outline. Use a <b>non-conductive</b> finish over the touch pads.</p>
+  <ol class="steps" data-group="frames">
+    <li data-id="f-measure"><div class="body"><b>Measure your frames.</b> Wire temple diameter (~1.5–1.8 mm), hinge-to-ear-tip distance, ear-tip thickness. Adjust the pod channels before printing.</div></li>
+    <li data-id="f-print"><div class="body"><b>Print.</b> Resin or PLA at 0.12 mm layers. Sand, prime, dry-fit on your head: pods must clear your temples, ear pods sit behind the ears. Look at it face-on in a mirror: nothing should show past the end pieces.</div></li>
+    <li data-id="f-hinge"><div class="body"><b>Pin the hinges.</b> Wires crossing a folding hinge fatigue fast. For v1 pin the hinges open (thread-lock the hinge screws) or leave a soft silicone-wire loop.</div></li>
+  </ol>
+</section>
+
+<section id="parts">
+  <h2><span class="num">2</span> Parts list (BOM)</h2>
+  <p>Prices come from the Music Glasses v1 spec (USD, before shipping/tax). Lines marked ~ are estimates. You already own the frames, so the donor-frame line is skipped.</p>
+  <div class="tablewrap"><table id="bomTable">
+    <thead><tr><th>Part</th><th>Purpose</th><th>Qty</th><th>Price</th><th>Link</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+  <p class="small muted" id="bomTotal"></p>
+  <h3>Tools &amp; consumables</h3>
+  <p>Fine-tip temperature-controlled iron, 0.3–0.5 mm rosin-core solder, flux pen, tweezers, flush cutters, multimeter, Kapton tape, UV resin, a hobby knife for the 0.1 mm pad recesses and a 3D printer (or a print service).</p>
+</section>
+
+<section id="gpio">
+  <h2><span class="num">3</span> QT Py ESP32 Pico pin map</h2>
+  <p>Verified against Adafruit's <a href="https://learn.adafruit.com/adafruit-qt-py-esp32-pico/pinouts" target="_blank" rel="noopener">QT Py ESP32 Pico pinouts</a> and the Arduino-ESP32 variant file. Touch channels are the original ESP32's T0–T9.</p>
+  <div class="tablewrap"><table id="gpioTable">
+    <thead><tr><th>Pad</th><th>GPIO</th><th>Alt</th><th>Use</th><th>Connects to</th><th>Notes</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+</section>
+
+<section id="wiring">
+  <h2><span class="num">4</span> Wiring diagrams</h2>
+  <p>Arrows show signal direction (or current flow for power). The QT Py is drawn <b>top view, USB-C at the top</b>; the VBAT pads are on the <b>back</b>. Pick a subsystem:</p>
+  <div class="wire-tabs" id="wireTabs"></div>
+  <div class="svgbox" id="wireSvg"></div>
+  <div class="legend" id="wireLegend"></div>
+  <p class="small muted" id="wireNotes"></p>
+</section>
+
+<section id="harness">
+  <h2><span class="num">5</span> Cross-frame harness</h2>
+  <p>Everything lives on the right except the left amp, the left touch pads and the cell. The right amp gets its 5 wires straight down the right wire temple;
+  the left side is reached along the <b>back of the top rim</b>, invisible from the front. The spec counts <b>8</b> cross-frame wires; this build runs <b>9</b>, because the cell's + lead from the left ear pod
+  also has to reach the switch in the right ear pod. The mic adds <b>no</b> cross-frame wires: its 5 leads stay inside the right ear pod.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>#</th><th>Signal</th><th>From (right)</th><th>To (left)</th><th>Wire</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>BCLK</td><td>A0 / GPIO26</td><td>Left amp BCLK</td><td>38 AWG magnet</td></tr>
+      <tr><td>2</td><td>LRC</td><td>A1 / GPIO25</td><td>Left amp LRC</td><td>38 AWG magnet</td></tr>
+      <tr><td>3</td><td>DIN</td><td>RX / GPIO7</td><td>Left amp DIN</td><td>38 AWG magnet</td></tr>
+      <tr><td>4</td><td>VBAT (switched)</td><td>Switch OUT</td><td>Left amp VIN (+ SD, GAIN)</td><td>32 AWG silicone</td></tr>
+      <tr><td>5</td><td>GND</td><td>QT Py GND</td><td>Left amp GND → cell −</td><td>32 AWG silicone</td></tr>
+      <tr><td>6–8</td><td>Touch L1 / L2 / L3</td><td>TX / MO / SCK</td><td>Left pod pads 1–3</td><td>38 AWG magnet, keep apart from BCLK</td></tr>
+      <tr><td>9</td><td>Cell + (raw)</td><td>Switch COM / charger BAT</td><td>Left ear pod cell +</td><td>32 AWG silicone</td></tr>
+    </tbody>
+  </table></div>
+  <ol class="steps" data-group="harness">
+    <li data-id="h-route"><div class="body"><b>Route.</b> Lay the 9 wires as a flat ribbon on the back face of the top rim, 2–3 mm below the top edge (above the lens bevel), UV-resin-tack every 10–15 mm, then along each wire temple to the pods. Leave a 10 mm service loop at each hinge.</div></li>
+    <li data-id="h-test"><div class="body"><b>Continuity.</b> Beep every conductor end-to-end and against its neighbours before you close anything.</div></li>
+    <li data-id="h-cover"><div class="body"><b>Cover.</b> Glue the tortoise rim cover strip over the ribbon and slide the painted temple sleeves over the wire runs.</div></li>
+  </ol>
+</section>
+
+<section id="touch">
+  <h2><span class="num">6</span> Touch inlays &amp; gestures</h2>
+  <p>Three copper-tape electrodes per hinge pod, inlaid flush in a 0.1 mm recess on the outer face and painted over. The ESP32 measures each pad's capacitance with <code>touchRead()</code>.</p>
+  <div class="grid g3">
+    <div class="feature"><span class="tag">Tap</span><b>Play / pause · answer / hang up</b>One pad, 40–300 ms. Ringing: answer. In a call: hang up.</div>
+    <div class="feature"><span class="tag">Long-press</span><b>Reject call</b>One pad held ≥ 0.8 s while ringing. Ignored otherwise.</div>
+    <div class="feature"><span class="tag">Swipe → / ←</span><b>Volume ±</b>Media ±8 of 127; during a call HFP speaker volume ±1 of 15 (synced to the phone). Invert in the app.</div>
+  </div>
+  <ol class="steps" data-group="touch">
+    <li data-id="t-cut"><div class="body"><b>Cut &amp; place.</b> Three ~11 mm pads with 1.5 mm gaps; a chevron edge lets a finger overlap two pads mid-swipe.</div></li>
+    <li data-id="t-solder"><div class="body"><b>Solder the tabs</b> on the inside of the pod wall, then seal the slot with UV resin.</div></li>
+    <li data-id="t-paint"><div class="body"><b>Paint.</b> Non-conductive finish only (mica pigments are fine; aluminium-flake metallics are not — check with a meter).</div></li>
+    <li data-id="t-tune"><div class="body"><b>Tune.</b> Firmware triggers at −15 % and releases at −10 % of a 64-sample baseline, with a 150 ms lockout. After painting, recalibrate from the app (Config bit 1).</div></li>
+  </ol>
+</section>
+
+<section id="audio">
+  <h2><span class="num">7</span> Audio &amp; Bluetooth stack</h2>
+  <p>The original ESP32 (in the QT Py ESP32 Pico) runs classic Bluetooth (A2DP + AVRCP + HFP) and BLE on one chip. Music flows as <b>A2DP (SBC) → 3-band EQ → I²S → 2 × MAX98357A</b>.
+  Each amp picks its channel from the stereo frame by its SD voltage.</p>
+  <ul>
+    <li><b>Core:</b> Arduino-ESP32 3.3.x · board "Adafruit QT Py ESP32" · default 3 MB app partition (8 MB flash).</li>
+    <li><b>Libraries:</b> ESP32-A2DP 1.8.10+ and arduino-audio-tools. BLE on the core's Bluedroid stack — NimBLE is reported to crash alongside A2DP.</li>
+    <li><b>Mode:</b> BTDM (dual mode). No Wi-Fi, so no OTA: flash over USB.</li>
+    <li><b>RAM is tight:</b> keep one custom GATT service, watch the free heap printed on connect and on every call, switch to <code>BluetoothA2DPSinkQueued</code> only if you hear dropouts.</li>
+  </ul>
+</section>
+
+<section id="calls">
+  <h2><span class="num">8</span> Phone calls (HFP) &amp; the mic</h2>
+  <h3>Route: plain Arduino, no ESP-IDF rebuild</h3>
+  <p>I checked the prebuilt libraries that ship with <b>Arduino-ESP32 3.3.12</b> (ESP-IDF 5.5.5): its <code>sdkconfig.h</code> for the ESP32 already sets
+  <code>CONFIG_BT_HFP_ENABLE</code>, <code>CONFIG_BT_HFP_CLIENT_ENABLE</code>, <code>CONFIG_BT_HFP_AUDIO_DATA_PATH_HCI</code>, <code>CONFIG_BT_HFP_WBS_ENABLE</code>,
+  <code>CONFIG_BTDM_CTRL_BR_EDR_SCO_DATA_PATH_HCI</code> and leaves <code>CONFIG_BT_HFP_USE_EXTERNAL_CODEC</code> off, so Bluedroid's own CVSD/mSBC codec is in.
+  The pschatzmann <b>ESP32-A2DP</b> library only covers A2DP + AVRCP, so the sketch calls the raw <code>esp_hf_client_*</code> API next to it on the same Bluedroid
+  instance. No ESP-IDF project or custom sdkconfig is needed.</p>
+  <ul>
+    <li><b>Init:</b> after <code>a2dp.start()</code> → set Class of Device (Audio, hands-free, telephony) → <code>esp_hf_client_register_callback</code> → <code>esp_hf_client_init</code> → <code>esp_hf_client_register_data_callback(in, out)</code>.</li>
+    <li><b>Audio path:</b> SCO over HCI. With the internal codec the stack hands the app <b>16-bit mono PCM</b> (8 kHz CVSD or 16 kHz mSBC) in the incoming callback and pulls mic PCM through the outgoing callback after <code>esp_hf_client_outgoing_data_ready()</code>. These are ESP-IDF's "legacy" data callbacks (<code>esp_hf_client_legacy_api.h</code>): still present and linked in 5.5, but Espressif says the internal codec will be removed in a later IDF. Then switch to <code>esp_hf_client_register_audio_data_callback</code> + your own CVSD/mSBC codec.</li>
+    <li><b>Call control:</b> CIND call / call-setup events → state (idle, incoming, outgoing, active), notified over GATT. Tap → <code>esp_hf_client_answer_call()</code> or hang up (<code>esp_hf_client_reject_call()</code> = AT+CHUP), long-press → reject, swipe → <code>esp_hf_client_volume_update(SPK, 0–15)</code>. Phone-side volume changes (+VGS) update the local level.</li>
+    <li><b>I²S switching:</b> music = TX only, 44.1 kHz/16-bit. When SCO comes up the firmware reopens I²S0 <b>full duplex at 32 kHz/32-bit</b> (the SPH0645 needs a 2.048–4.096 MHz bit clock), upsamples the far end ×2 (mSBC) or ×4 (CVSD) for the speakers and averages the mic down to 16/8 kHz. It switches back when SCO drops. The phone pauses A2DP during a call.</li>
+    <li><b>Echo:</b> open-ear speakers ~3 cm from the ear and a mic ~6 cm behind them will leak. The phone's own AEC/NR stays on (the glasses do <b>not</b> send AT+NREC=0); the firmware adds <b>half-duplex ducking</b> (mic −12 dB for 150 ms whenever the far end is louder than a threshold) and keeps the call volume moderate. No on-chip AEC: ESP-SR/AEC doesn't fit next to A2DP + BLE on this chip.</li>
+    <li><b>RAM:</b> 46.9 KB static (14 %), plus 2 × 4 KB ring buffers and a 4 KB audio task at runtime; Bluedroid HFP itself takes ~15–20 KB of heap when connected (estimate). The free heap prints on HFP connect and every SCO start: keep it above ~30 KB.</li>
+  </ul>
+  <h3>The mic: behind the ear, for looks</h3>
+  <p><b>Adafruit I2S MEMS Microphone Breakout, SPH0645LM4H</b> (<a href="https://www.adafruit.com/product/3421" target="_blank" rel="noopener">#3421, $6.95</a>) glued to the lower-front wall of the
+  right ear pod, its bottom port over a 1 mm hole with a short printed horn, aimed forward-down along the jaw line. Wiring (all local): BCLK → A0, LRCL → A1 (shared with the amps), DOUT → GPIO22
+  (SDA1 on the STEMMA QT connector, not a strapping pin), SEL → GND, 3V, GND.</p>
+  <div class="honest"><b>Trade-off:</b> ~9–11 cm from the mouth instead of ~3 cm on a boom means ~10 dB less voice level and more room sound. Mitigations in this build: a sensitive
+  MEMS mic (−26 dBFS @ 94 dB SPL), 6× digital gain (<code>MIC_GAIN</code>), the directional horn, foam sealing so it hears outside not inside the pod, and the phone's noise reduction.
+  If callers still say you're far away, the next step is a second mic for beamforming. That costs RAM and another wire, so it's left out of v1.</div>
+</section>
+
+<section id="power">
+  <h2><span class="num">9</span> Battery &amp; charging</h2>
+  <p>Protected 120 mAh 401230 cell in the left ear pod → its + lead crosses the frame (behind the top rim) to the slide switch in the right ear pod → switch OUT → QT Py <b>VBAT+</b> (diode-protected, 3–6 V) and both amps' VIN.
+  The Micro-Lipo charger (100 mA default, right for 120 mAh) sits on the cell side of the switch and is fed from the QT Py's 5 V pad, so the one USB-C port flashes <i>and</i> charges.</p>
+  <ol class="steps" data-group="power">
+    <li data-id="p-polarity"><div class="body"><b>Check polarity</b> on the cell leads before soldering; insulate each joint immediately.</div></li>
+    <li data-id="p-sense"><div class="body"><b>Battery sense.</b> 100 k / 100 k divider from switched VBAT to A3 (GPIO15, ADC2, strapping pin). Firmware maps 3.3–4.2 V to % every 5 s.</div></li>
+    <li data-id="p-life"><div class="body"><b>Run time (estimates).</b> Music ~100–130 mA → ~1 h. Calls ~110–150 mA (SCO keeps the radio busier, plus the mic and 32 kHz I²S) → ~45–60 min of talk. Connected idle ~25–40 mA → ~3–4 h of standby. 350 mAh ≈ 3×.</div></li>
+    <li data-id="p-safe"><div class="body"><b>Safety.</b> Don't charge while wearing; keep the cell from being crushed in the ear pod; never use an unprotected cell.</div></li>
+  </ol>
+</section>
+
+<section id="firmware">
+  <h2><span class="num">10</span> Firmware (Arduino)</h2>
+  <p>One sketch: A2DP sink + AVRCP callbacks, <b>HFP hands-free client</b> with call audio and the I²S mic, touch gesture machine (tap / long-press / swipe), BLE GATT server
+  (incl. Find chime + Call state), battery monitor and EQ presets (saved in NVS). It compiles with arduino-cli for <code>esp32:esp32:adafruit_qtpy_esp32_pico</code> on core 3.3.12
+  with ESP32-A2DP 1.8.11 + arduino-audio-tools: <b>1,225,668 B flash (36 % of the 3 MB app slot), 46,928 B static RAM (14 %)</b>. It has not been run on hardware.</p>
+  <div class="code-slot" data-file="firmware/music_glasses/music_glasses.ino"></div>
+</section>
+
+<section id="app">
+  <h2><span class="num">11</span> Companion app (Flutter)</h2>
+  <p>Flutter + <code>flutter_blue_plus</code>: scan for the service UUID, connect, request MTU 185, subscribe to every notify characteristic. Audio itself is paired in the phone's Bluetooth settings.
+  flutter_blue_plus is free for personal use; check its licence on pub.dev before selling anything. Run <code>flutter create .</code> inside <code>app/</code> to generate the platform folders, then add the Bluetooth + location permissions listed in <code>app/README.md</code>.</p>
+  <div class="code-slot" data-file="app/pubspec.yaml"></div>
+  <div class="code-slot" data-file="app/lib/ble/glasses_client.dart"></div>
+  <div class="code-slot" data-file="app/lib/state/glasses_state.dart"></div>
+  <div class="code-slot" data-file="app/lib/screens/control_screen.dart"></div>
+  <div class="code-slot" data-file="app/lib/screens/find_screen.dart"></div>
+  <div class="code-slot" data-file="app/lib/screens/scan_screen.dart"></div>
+  <div class="code-slot" data-file="app/lib/main.dart"></div>
+</section>
+
+<section id="gatt">
+  <h2><span class="num">12</span> GATT table</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Characteristic</th><th>UUID</th><th>Props</th><th>Format</th></tr></thead>
+    <tbody>
+      <tr><td><b>Music Glasses service</b></td><td class="pin">9f3c0001-2b6e-4c1a-8f5d-6a7e0b1c2d3e</td><td>—</td><td>custom</td></tr>
+      <tr><td>Volume</td><td class="pin">9f3c0002-2b6e-4c1a-8f5d-6a7e0b1c2d3e</td><td>R/W/N</td><td>uint8 0–127</td></tr>
+      <tr><td>Play state</td><td class="pin">9f3c0003-2b6e-4c1a-8f5d-6a7e0b1c2d3e</td><td>R/W/N</td><td>uint8 0 paused, 1 playing (write = command)</td></tr>
+      <tr><td>Track</td><td class="pin">9f3c0004-2b6e-4c1a-8f5d-6a7e0b1c2d3e</td><td>R/N</td><td>UTF-8 title␟artist (0x1F separator), ≤ 180 B</td></tr>
+      <tr><td>EQ preset</td><td class="pin">9f3c0005-2b6e-4c1a-8f5d-6a7e0b1c2d3e</td><td>R/W/N</td><td>uint8 0 Flat, 1 Bass+, 2 Vocal, 3 Treble</td></tr>
+      <tr><td>Audio link</td><td class="pin">9f3c0006-2b6e-4c1a-8f5d-6a7e0b1c2d3e</td><td>R/N</td><td>uint8 0 off, 1 connected, 2 streaming</td></tr>
+      <tr><td>Config</td><td class="pin">9f3c0007-2b6e-4c1a-8f5d-6a7e0b1c2d3e</td><td>W</td><td>bit0 invert swipe, bit1 recalibrate</td></tr>
+      <tr><td><b>Find chime</b></td><td class="pin">9f3c0008-2b6e-4c1a-8f5d-6a7e0b1c2d3e</td><td>W</td><td>uint8 seconds to chime (0 = stop). Fixed level, ignores media volume / mute; pauses music; ignored during a call</td></tr>
+      <tr><td><b>Call state</b></td><td class="pin">9f3c0009-2b6e-4c1a-8f5d-6a7e0b1c2d3e</td><td>R/N</td><td>uint8 0 idle, 1 incoming, 2 outgoing, 3 active</td></tr>
+      <tr><td>Battery Level</td><td class="pin">0x180F / 0x2A19</td><td>R/N</td><td>uint8 %</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted">Test with nRF Connect while music plays before the app exists.</p>
+</section>
+
+<section id="find">
+  <h2><span class="num">13</span> Find my glasses</h2>
+  <p>Three tools in the app's <b>Find</b> screen, none of which need a server or an account:</p>
+  <div class="grid g3">
+    <div class="feature"><span class="tag">Hotter / colder</span><b>RSSI meter</b>While connected the app polls <code>readRssi()</code> every 500 ms; when not, it scans for the service UUID and uses the advertising RSSI. Smoothed, then shown as cold → hot with a rough distance (BLE RSSI is ±5–10 dB noisy: treat it as a direction hint).</div>
+    <div class="feature"><span class="tag">Last seen</span><b>Where you lost them</b>On every disconnect the app stores the time and the <b>phone's</b> location (geolocator) in shared_preferences, on the phone only. The glasses have no GPS, so this is where the phone was when the link dropped.</div>
+    <div class="feature"><span class="tag">Play sound</span><b>Chime, even when muted</b>Writes N seconds to <code>9f3c0008</code>. The firmware pauses music and writes a G6–C7 blip straight to I²S at a fixed level, bypassing the A2DP volume. "Stop" writes 0.</div>
+  </div>
+  <div class="honest">Limits: the glasses must be <b>switched on</b> and within BLE range (~10–30 m indoors). If the battery is flat or the switch is off there's nothing to hear and only "last seen" helps.
+  On iOS, background BLE scanning is throttled and needs the <code>bluetooth-central</code> background mode; the disconnect location needs "While Using" (or "Always") location permission, so the app saves it when it next runs if the OS suspended it.</div>
+</section>
+
+<section id="order">
+  <h2><span class="num">14</span> Build order (bench first)</h2>
+  <ol class="steps" data-group="order">
+    <li data-id="o-audio"><div class="body"><b>Breadboard audio.</b> QT Py + one amp + speaker, pair a phone and play. Add the second amp with the 330 kΩ and confirm stereo.</div></li>
+    <li data-id="o-avrcp"><div class="body"><b>AVRCP.</b> Check play/pause, volume sync and metadata on both iPhone and Android.</div></li>
+    <li data-id="o-touch"><div class="body"><b>Touch.</b> Copper pads on a printed pod blank: log raw values, tune thresholds.</div></li>
+    <li data-id="o-call"><div class="body"><b>Calls.</b> Add the SPH0645 on the breadboard (GPIO22), place a call from the phone: check answer / hang up / reject, both directions of audio, mSBC vs CVSD, and the free heap. Then music → call → music transitions.</div></li>
+    <li data-id="o-ble"><div class="body"><b>BLE.</b> Test the GATT with nRF Connect while streaming; watch free heap.</div></li>
+    <li data-id="o-app"><div class="body"><b>App.</b> Connect + Now Playing first, then call state, Find (RSSI, last seen, Play sound), EQ and Settings.</div></li>
+    <li data-id="o-power"><div class="body"><b>Power.</b> Cell, charger, switch; measure streaming current and run a full play-time test.</div></li>
+    <li data-id="o-frame"><div class="body"><b>Frame integration.</b> The 14 animated steps of this guide.</div></li>
+  </ol>
+</section>
+
+<section id="risks">
+  <h2><span class="num">15</span> Risks &amp; caveats</h2>
+  <ul>
+    <li><b>Fit:</b> the QT Py (22 × 18 mm) and amp breakouts (19 × 18 mm) don't fit thin wire temples, so v1 accepts clip-on hinge and ear-tip pods.</li>
+    <li><b>Battery life:</b> ~1 h of music or ~45–60 min of calls on 120 mAh (estimates); ~3× with a 350 mAh cell in a longer left pod.</li>
+    <li><b>Call quality:</b> the mic is ~10 cm from the mouth (behind the ear, for looks): lower voice level and more room noise than earbuds. Tune <code>MIC_GAIN</code>; keep the phone's noise reduction on.</li>
+    <li><b>Echo:</b> open-ear speakers leak into the mic. Mitigated by the phone's AEC + firmware half-duplex ducking + moderate call volume; expect some double-talk clipping.</li>
+    <li><b>iOS:</b> HFP calls work, and iOS sends calls to the glasses when they're the selected audio route (it normally picks the last connected HFP device). iOS won't show the Classic link to apps, so the app relies on the GATT call state. Background BLE scanning is throttled, and the last-seen location depends on the location permission. Android behaves more predictably.</li>
+    <li><b>Legacy HFP data API:</b> uses ESP-IDF's internal codec + legacy PCM callbacks; a future core may drop them (then: external-codec callbacks + own CVSD/mSBC).</li>
+    <li><b>Hinge wiring</b> fatigues: pin the hinges or leave silicone loops.</li>
+    <li><b>Open-ear sound:</b> these speakers resonate near 950 Hz — thin bass, some leakage. Keep gain low.</li>
+    <li><b>Touch through paint:</b> non-conductive finish only; isolate the pads from the metal wire temple (Kapton under the pod channel).</li>
+    <li><b>Stack stability:</b> A2DP + BLE is RAM-tight; Wi-Fi is off the table.</li>
+    <li><b>LiPo near the head:</b> protected cell, 100 mA charge, no charging while worn.</li>
+    <li><b>9 vs 8 cross-frame wires:</b> see the harness section.</li>
+  </ul>
+</section>
+
+<section id="sources">
+  <h2><span class="num">16</span> Sources</h2>
+  <ul class="small">
+    <li><a href="https://www.adafruit.com/product/5395" target="_blank" rel="noopener">Adafruit QT Py ESP32 Pico (#5395)</a> · <a href="https://learn.adafruit.com/adafruit-qt-py-esp32-pico/pinouts" target="_blank" rel="noopener">pinouts</a></li>
+    <li><a href="https://www.adafruit.com/product/3006" target="_blank" rel="noopener">MAX98357A breakout (#3006)</a> · <a href="https://learn.adafruit.com/adafruit-max98357-i2s-class-d-mono-amp/pinouts" target="_blank" rel="noopener">SD / GAIN pins</a></li>
+    <li><a href="https://octopart.com/part/same-sky/CMS-151135-18SP-X8" target="_blank" rel="noopener">Same Sky CMS-151135-18SP-X8 speaker</a></li>
+    <li><a href="https://www.adafruit.com/product/4410" target="_blank" rel="noopener">Micro-Lipo USB-C charger (#4410)</a> · <a href="https://www.adafruit.com/product/1128" target="_blank" rel="noopener">Copper foil tape (#1128)</a></li>
+    <li><a href="https://www.amazon.com/dp/B0GDXD64XN" target="_blank" rel="noopener">401230 120 mAh LiPo</a></li>
+    <li><a href="https://github.com/pschatzmann/ESP32-A2DP/releases" target="_blank" rel="noopener">ESP32-A2DP releases</a> · <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/WIFI-and-A2DP-Coexistence" target="_blank" rel="noopener">coexistence</a> · <a href="https://github.com/pschatzmann/ESP32-A2DP/wiki/A2DP-Sink-Optimizations" target="_blank" rel="noopener">sink RAM tuning</a></li>
+    <li><a href="https://www.adafruit.com/product/3421" target="_blank" rel="noopener">Adafruit SPH0645LM4H I²S mic breakout (#3421)</a> · <a href="https://learn.adafruit.com/adafruit-i2s-mems-microphone-breakout" target="_blank" rel="noopener">guide</a></li>
+    <li><a href="https://docs.espressif.com/projects/esp-idf/en/v5.5/esp32/api-reference/bluetooth/esp_hf_client.html" target="_blank" rel="noopener">ESP-IDF 5.5 HFP client API</a> · <a href="https://github.com/espressif/esp-idf/tree/v5.5/examples/bluetooth/bluedroid/classic_bt/hfp_hf" target="_blank" rel="noopener">hfp_hf example</a></li>
+    <li><a href="https://pub.dev/packages/geolocator" target="_blank" rel="noopener">geolocator</a> · <a href="https://pub.dev/packages/shared_preferences" target="_blank" rel="noopener">shared_preferences</a></li>
+    <li><a href="https://pub.dev/packages/flutter_blue_plus/license" target="_blank" rel="noopener">flutter_blue_plus licence</a></li>
+  </ul>
+</section>
