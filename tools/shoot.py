@@ -49,6 +49,13 @@ async def main():
         if len(sys.argv) == 1 or "find" in sys.argv:
             await pg.goto(BASE + "?play=0&docs=find", wait_until="load"); await pg.wait_for_timeout(2500)
             await pg.screenshot(path=OUT + "17_find.png"); print("shot find")
+        if len(sys.argv) == 1 or "beginner" in sys.argv:
+            # 19 · the complete-beginner chapter, opened from the landing button's deep link
+            await pg.goto(BASE + "?play=0&docs=beginner", wait_until="load"); await pg.wait_for_timeout(2500)
+            await pg.screenshot(path=OUT + "19_beginner.png"); print("shot beginner")
+            # 20 · Soldering 101 diagrams
+            await pg.evaluate("document.getElementById('b-solder').scrollIntoView({block: 'start'})"); await pg.wait_for_timeout(1200)
+            await pg.screenshot(path=OUT + "20_soldering.png"); print("shot soldering")
         if len(sys.argv) == 1 or "docs" in sys.argv:
             await pg.goto(BASE + "?play=0&docs=wiring", wait_until="load"); await pg.wait_for_timeout(2500)
             await pg.screenshot(path=OUT + "docs_wiring.png"); print("shot docs")

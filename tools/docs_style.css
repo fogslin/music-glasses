@@ -123,3 +123,25 @@ footer{color:#5d6f92;font-size:12.5px;border-top:1px solid var(--line);padding-t
   main{padding-top:56px}
 }
 @media print{nav.sidebar,.menu-btn,.viewer{display:none}.codeblock pre{max-height:none}}
+/* beginner chapter ("New to this? Start here") */
+.b-hero{display:grid;grid-template-columns:1fr 230px;gap:18px;align-items:start;background:linear-gradient(135deg,#10233a,#151432);border:1px solid #2b4470;border-radius:16px;padding:18px 20px;margin:6px 0 12px}
+.b-jump{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.b-jump a{font-size:12.5px;text-decoration:none;border:1px solid #2b4470;background:#0f1a2e;color:#cfe0ff;border-radius:99px;padding:4px 11px}
+.b-jump a:hover{border-color:var(--accent);color:var(--accent)}
+.b-meter{background:#0b1222;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.b-mlab{font:600 10.5px/1 var(--mono);letter-spacing:.12em;color:var(--muted)}
+.b-mval{font-size:40px;font-weight:800;line-height:1.1;color:var(--warn)} .b-mval span{font-size:18px;color:var(--muted);font-weight:600}
+.b-bars{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;margin:4px 0 8px}
+.b-bars i{height:9px;border-radius:3px;background:#1a2540}
+.b-bars i.on{background:linear-gradient(90deg,var(--accent),#7dd3fc)} .b-bars i.on.hot{background:linear-gradient(90deg,var(--warn),#fb923c)}
+.b-st{position:relative;padding-bottom:16px} .b-st .tag{font-size:11.5px;color:var(--warn)}
+.b-done{margin-top:8px;font-size:13px;color:var(--ok);border-top:1px dashed var(--line);padding-top:7px}
+.b-figs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0;max-width:900px}
+.b-figs svg,.b-fig-wide svg{width:100%;height:auto;display:block}
+.b-fig-wide{margin:12px 0;max-width:900px}
+.b-tools td:first-child{min-width:260px} .b-tools .pill{margin-right:6px}
+.b-h4{font-size:15px;margin:18px 0 6px;color:var(--warn)}
+.b-gloss{display:grid;grid-template-columns:minmax(110px,210px) 1fr;gap:6px 16px;margin:8px 0}
+.b-gloss dt{font-weight:700;color:var(--accent)} .b-gloss dd{margin:0;color:#c6d3ea;font-size:14px}
+.feature ul{margin:6px 0 0;padding-left:18px;color:#c6d3ea} .feature li{margin:2px 0} .feature strong{color:#fff}
+@media (max-width:760px){.b-figs{grid-template-columns:1fr}.b-hero{grid-template-columns:1fr}.b-gloss{grid-template-columns:1fr}.b-gloss dd{margin-bottom:6px}}
