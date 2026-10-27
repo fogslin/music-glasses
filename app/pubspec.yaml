@@ -1,0 +1,23 @@
+name: muse_glasses
+description: Companion app for Music Glasses Mark 1 (BLE control, call state, find my glasses).
+publish_to: "none"
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_blue_plus: ^1.35.0   # check the licence terms on pub.dev before shipping (see Docs → Companion app)
+  provider: ^6.1.2
+  geolocator: ^13.0.1          # phone location at the last disconnect (stored on the phone only)
+  shared_preferences: ^2.3.2   # persists "last seen"
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
