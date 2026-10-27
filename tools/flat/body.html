@@ -1,0 +1,92 @@
+<body class="room">
+<canvas id="scene" aria-label="Animated 3D assembly of the Music Glasses Mark 1" tabindex="0"></canvas>
+<div id="ui-loading">LOADING THE ROOM…</div>
+<div id="ui-labels" aria-hidden="true"></div>
+<div id="ui-noGL" hidden></div>
+
+<aside class="pl" aria-label="Step by step">
+  <div class="kicker">STEP BY STEP</div>
+  <h1 class="brand">MUSIC GLASSES</h1>
+  <p class="intro">Your tortoiseshell frames turned into Bluetooth music glasses: clip-on pods, stereo micro-speakers and touch inlays on a QT Py ESP32 Pico. Built in 3D in the order the manual shows; every pad, wire and screw goes where the page puts it.</p>
+  <div class="ctrs">
+    <div class="ctr"><span>Step</span><b id="ui-cStep">1</b><i id="ui-cStepT">/13</i></div>
+    <div class="ctr"><span>Hardware in</span><b id="ui-cHw">0</b><i id="ui-cHwT">/0</i></div>
+    <div class="ctr"><span>Pieces in</span><b id="ui-cPc">0</b><i id="ui-cPcT">/0</i></div>
+  </div>
+  <div class="card step" aria-live="polite">
+    <button class="toggle-left" id="ui-toggleLeft" aria-label="Collapse step text">▾</button>
+    <div class="st-title" id="ui-stTitle">STEP 1</div>
+    <div class="st-body" id="ui-stBody"></div>
+    <div class="st-prog" id="ui-stProg"></div>
+  </div>
+  <div class="card mcard">
+    <div class="mc-head"><span>MANUAL · PAGE <b id="ui-mPage">2</b></span>
+      <button id="ui-openManual"><svg class="ico" viewBox="0 0 24 24"><path d="M3 5.5C5.5 4 8.5 4 12 6c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z"/><path d="M12 6v13.5"/></svg>Open the manual</button></div>
+    <div class="mc-img" id="ui-mImg" title="Open the manual"></div>
+  </div>
+</aside>
+
+<aside class="pr" aria-label="Piece and timeline">
+  <div class="pr-head"><span>PIECE</span><span>⇧K</span></div>
+  <div class="seg piece"><button class="on" data-piece="glasses">Music Glasses</button><button data-piece="docs">Docs &amp; code</button></div>
+  <div class="pr-row">
+    <button class="sq" id="ui-prev" aria-label="Previous step">‹</button>
+    <div class="pr-title"><b id="ui-pTitle">…</b><small id="ui-pSub"></small></div>
+    <button class="play" id="ui-play" aria-label="Play"></button>
+    <button class="sq" id="ui-next" aria-label="Next step">›</button>
+  </div>
+  <div class="tl-head"><span>THE BUILD</span><span class="hint">[ ] · 0–9 · space</span></div>
+  <div class="ticks" id="ui-ticks"></div>
+  <div class="track" id="ui-track" role="slider" tabindex="0" aria-label="Build timeline" aria-valuemin="0" aria-valuemax="136" aria-valuenow="0"><div class="fill" id="ui-fill"></div><div class="tickmarks" id="ui-tickmarks"></div><div class="knob" id="ui-knob"></div></div>
+  <div class="tl-head"><span>VIEW</span><span class="hint">⇧V</span></div>
+  <div class="pr-row2">
+    <div class="seg view"><button class="on" data-view="room">Room</button><button data-view="drawing">Drawing</button></div>
+    <div class="icons">
+      <button id="ui-iManual" title="Manual (M)" aria-label="Open the manual"><svg class="ico" viewBox="0 0 24 24"><path d="M3 5.5C5.5 4 8.5 4 12 6c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z"/><path d="M12 6v13.5"/></svg></button>
+      <button id="ui-iFit" title="Director camera" aria-label="Director camera"><svg class="ico" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><circle cx="12" cy="12" r="2.5"/></svg></button>
+      <button id="ui-iCam" title="Free camera (drag to orbit)" aria-label="Free camera"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="10" rx="2"/><path d="M16 11l5-3v8l-5-3"/></svg></button>
+      <button id="ui-iHelp" title="Help" aria-label="Help"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.5v.4M12 17h.01"/></svg></button>
+    </div>
+  </div>
+</aside>
+
+<div class="help" id="ui-help" role="dialog" aria-label="Help"><button id="ui-helpClose" aria-label="Close">×</button>
+  <b>How it works</b><br>The build plays on its own, step after step. Scrub <b>THE BUILD</b> timeline or click a number to jump.<br>
+  <kbd>←</kbd> <kbd>→</kbd> / <kbd>[</kbd> <kbd>]</kbd> step · <kbd>space</kbd> play/pause · <kbd>1</kbd>–<kbd>9</kbd> jump · <kbd>M</kbd> manual · <kbd>⇧V</kbd> Room/Drawing · <kbd>⇧K</kbd> Docs<br>
+  Drag the scene to look around (free camera); the camera icon toggles it, the frame icon returns to the director.</div>
+
+<div class="mus" id="ui-music" aria-label="Music while you build">
+  <div class="mus-card" id="ui-musCard" role="region" aria-label="Now playing while you build">
+    <div class="pr-head"><span>NOW PLAYING WHILE YOU BUILD</span><button id="ui-musClose" aria-label="Collapse music panel" style="border:0;background:none;color:#bdbbc2;font-size:15px;line-height:1;cursor:pointer">×</button></div>
+    <div class="seg" id="ui-musTabs" role="tablist"></div>
+    <div class="mus-frame" id="ui-musFrame"></div>
+    <div class="mus-note">Official Spotify embeds · needs internet · full tracks when logged in to Spotify, previews otherwise · <a id="ui-musOpen" href="#" target="_blank" rel="noopener">open in Spotify ↗</a></div>
+  </div>
+  <button class="mus-pill" id="ui-musPill" aria-expanded="false" aria-controls="ui-musCard"><span class="eq"><i></i><i></i><i></i></span><span id="ui-musPillTxt">Music while you build</span></button>
+</div>
+<div class="corner"><button id="ui-cornerDocs"><svg class="ico" viewBox="0 0 24 24"><path d="M8 4h8l4 4v12H8z"/><path d="M4 8v12h4M16 4v4h4"/></svg>Docs &amp; code</button></div>
+
+<section class="mv" id="ui-manual" aria-label="Manual viewer">
+  <div class="mv-head"><div><small>MUSIC GLASSES · ASSEMBLY MANUAL</small>Step-by-step pages</div>
+    <label><input type="checkbox" id="ui-follow" checked> follow the build</label>
+    <button id="ui-mvClose" aria-label="Close manual">×</button></div>
+  <div id="ui-mvPage"></div>
+  <div class="mv-foot"><button id="ui-mvPrev" aria-label="Previous page">‹</button><span id="ui-mvNum">1 / 1</span><button id="ui-mvNext" aria-label="Next page">›</button></div>
+</section>
+
+<section class="docs" id="ui-docs" aria-label="Docs and code">
+  <div class="docs-head"><div>MUSIC GLASSES · Docs &amp; code <span style="color:#93a4c3;font-weight:400">— parts, pin map, wiring, firmware, Flutter app, GATT</span></div>
+    <div class="r">Checklist <span id="progTxt">0%</span><button class="btn sm" id="resetChecks" style="border:1px solid #22304d;background:#15213a;color:#e6edf7;border-radius:8px;padding:4px 9px;font-size:12px">Reset</button><button class="x" id="ui-docsClose" aria-label="Close docs">×</button></div></div>
+  <div style="height:3px;background:#1a2540"><i id="progBar" style="display:block;height:100%;width:0;background:linear-gradient(90deg,#5eead4,#a78bfa)"></i></div>
+  <div class="docs-body">
+    <nav id="ui-docsNav" aria-label="Docs sections">
+      <div class="grp">Start</div><a href="#overview">Overview</a><a href="#frames">Frames &amp; pods</a><a href="#parts">Parts &amp; prices</a><a href="#gpio">QT Py pin map</a>
+      <div class="grp">Hardware</div><a href="#wiring">Wiring diagrams</a><a href="#harness">Cross-frame harness</a><a href="#touch">Touch inlays</a><a href="#audio">Audio &amp; Bluetooth</a><a href="#calls">Calls &amp; mic</a><a href="#power">Battery &amp; charging</a>
+      <div class="grp">Software</div><a href="#firmware">Firmware</a><a href="#app">Companion app</a><a href="#gatt">GATT table</a><a href="#find">Find my glasses</a>
+      <div class="grp">Wrap-up</div><a href="#order">Build order</a><a href="#risks">Risks &amp; caveats</a><a href="#sources">Sources</a>
+    </nav>
+    <main id="docs">
+__DOCS_HTML__
+    </main>
+  </div>
+</section>
